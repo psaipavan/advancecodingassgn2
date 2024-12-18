@@ -1,0 +1,41 @@
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode() {}
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;  // Fixed syntax
+        this.right = right; // Fixed syntax
+    }
+}
+
+class Solution {
+    public void flatten(TreeNode root) {
+        TreeNode current = root;
+        while (current != null) {
+            if (current.left != null) {  // Fixed the null check
+                TreeNode rightmost = current.left;
+
+                // Find the rightmost node of the left subtree
+                while (rightmost.right != null) {
+                    rightmost = rightmost.right; // Fixed traversal
+                }
+
+                // Rewire the connections
+                rightmost.right = current.right;
+                current.right = current.left;
+                current.left = null;
+            }
+
+            // Move to the next node
+            current = current.right;
+        }
+    }
+}
